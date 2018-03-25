@@ -78,5 +78,4 @@ This will output to the test.log file and terminal.
 ### 
 
 # Todo
-- Docs
 - Tests

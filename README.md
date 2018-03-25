@@ -22,11 +22,11 @@ aelog's design objectives:
 import aelog
 
 aelog.debug("simple debug message")
-aelog.info("simple debug message")
-aelog.warning("simple debug message")
-aelog.error("simple debug message")
-aelog.critical("simple debug message")
-aelog.exception("simple debug message")
+aelog.info("simple info message")
+aelog.warning("simple warning message")
+aelog.error("simple error message")
+aelog.critical("simple critical message")
+aelog.exception("simple exception message")
 ```
 This will output to the terminal.
 ```
@@ -40,11 +40,11 @@ import aelog
 aelog.init_aelog("test.log", True)
 
 aelog.debug("simple debug message")
-aelog.info("simple debug message")
-aelog.warning("simple debug message")
-aelog.error("simple debug message")
-aelog.critical("simple debug message")
-aelog.exception("simple debug message")
+aelog.info("simple info message")
+aelog.warning("simple warning message")
+aelog.error("simple error message")
+aelog.critical("simple critical message")
+aelog.exception("simple exception message")
 ```
 This will output to the test.log file and terminal.
 ```
@@ -59,12 +59,12 @@ import aelog
 aelog.init_aelog("test.log", True)
 
 async def log_out():
-    await aelog.debug("simple debug message")
-    await aelog.info("simple debug message")
-    await aelog.warning("simple debug message")
-    await aelog.error("simple debug message")
-    await aelog.critical("simple debug message")
-    await aelog.exception("simple debug message")
+    aelog.debug("simple debug message")
+    aelog.info("simple info message")
+    aelog.warning("simple warning message")
+    aelog.error("simple error message")
+    aelog.critical("simple critical message")
+    aelog.exception("simple exception message")
 
 if "__name__"=="__main__":
     loop = asyncio.get_event_loop()

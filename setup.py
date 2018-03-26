@@ -26,8 +26,10 @@ SOFTWARE.
 """
 from distutils.core import setup
 
+from aelog import __version__
+
 setup(name='aelog',
-      version='1.0.0',
+      version=__version__,
       description='An simple, async, full package name path, log rotating, different colored log library.',
       long_description=open('README.md').read(),
       author='TinyBees',
@@ -36,21 +38,21 @@ setup(name='aelog',
       packages=['aelog'],
       entry_points={},
       requires=['colorlog'],
-      install_requires=[
-          'colorlog==3.1.0'],
+      install_requires=open("requirements.txt").readlines(),
       python_requires=">=3.5",
+      keywords=["python", "logging", "colored", "async", "simple", "rotating"],
       license='MIT',
-      keywords='python logging colored async simple rotating',
       classifiers=[
-          'Development Status :: 5 - Production/Stable',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
+          'Natural Language :: Chinese (Simplified)',
           'Operating System :: POSIX',
           'Operating System :: Microsoft :: Windows',
           'Operating System :: MacOS :: MacOS X',
-          'Topic :: Software Development :: Quality Assurance',
-          'Topic :: Software Development :: Testing',
+          'Topic :: Software Development :: Libraries :: Python Modules',
           'Topic :: Utilities',
           'Programming Language :: Python',
           'Programming Language :: Python :: 3.5',
-          'Programming Language :: Python :: 3.6'])
+          'Programming Language :: Python :: 3.6']
+      )

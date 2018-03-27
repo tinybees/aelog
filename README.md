@@ -47,7 +47,7 @@ Different levels of logging, different color, the color is cyan, green, yellow, 
 ```
 import aelog
 
-aelog.init_aelog("test.log", True)
+aelog.init_aelog("test.log", True)  # Output to the test.log file and terminal 
 
 def test_aelog_output_file():
     """
@@ -77,7 +77,7 @@ Different levels of logging, different color, the color is cyan, green, yellow, 
 import asyncio
 import aelog
 
-aelog.init_aelog("test.log", True)
+aelog.init_aelog("test.log", True)  # Output to the test.log file and terminal 
 
 async def test_async_output():
     await aelog.async_debug("simple debug message")

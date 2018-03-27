@@ -38,19 +38,12 @@ AELOG_CONFIG_DEFAULTS = {
             "level": "DEBUG",
             "formatter": "aelog_default",
             "stream": sys.stdout,
-        },
-        "aelog_error_console": {
-            "class": "logging.StreamHandler",
-            "level": "ERROR",
-            "formatter": "aelog_default",
-            "stream": sys.stderr,
-        },
-
+        }
     },
     "loggers": {
         "": {
             "level": "DEBUG",
-            "handlers": ["aelog_console", "aelog_error_console"]
+            "handlers": ["aelog_console"]
         }
     }
 }

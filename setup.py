@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 """
-from distutils.core import setup
+from setuptools import setup
 
 from aelog import __version__
 
@@ -32,6 +32,7 @@ setup(name='aelog',
       version=__version__,
       description='An simple, async, full package name path, log rotating, different colored log library.',
       long_description=open('README.md').read(),
+      long_description_content_type='text/markdown',
       author='TinyBees',
       author_email='a598824322@qq.com',
       url='https://github.com/tinybees/aelog',
@@ -40,7 +41,7 @@ setup(name='aelog',
       requires=['colorlog'],
       install_requires=open("requirements.txt").readlines(),
       python_requires=">=3.5",
-      keywords=["python", "logging", "colored", "async", "simple", "rotating"],
+      keywords="logging, colored, async, simple, rotating",
       license='MIT',
       classifiers=[
           'Development Status :: 4 - Beta',

@@ -10,8 +10,8 @@ aelog's design objectives:
 - Output log contains the full package name path.
 - Provide asynchronous log output function, at the same time, contains common log output.
 - Output according to the log level to mark the different colors separately.
-- Provide a log rotating, automatic backup.
-- Default output to the terminal, if you don't provide the log file path.
+- Provide a log file rotating, automatic backup.
+- Output to the terminal and file, default output to the terminal, if you don't provide the log file path.
 
 # Installing aelog
 - ```pip install aelog```

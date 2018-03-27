@@ -10,4 +10,4 @@
 from .log import *
 from .aelog import *
 
-__version__ = "1.0.0a4"
+__version__ = "1.0.0"

@@ -44,7 +44,7 @@ setup(name='aelog',
       keywords="log, logging, colored, async, asynchronous, simple, rotating",
       license='MIT',
       classifiers=[
-          'Development Status :: 5 - PRODUCTION/STABLE',
+          'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: Chinese (Simplified)',

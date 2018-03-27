@@ -35,7 +35,7 @@ def get_logger() -> Logger:
     if not getattr(init_aelog, "init_flag", None):
         init_aelog()
     caller_module = inspect.getmodule(inspect.currentframe().f_back)
-    return logging.getLogger(caller_module.__name__)
+    return logging.getLogger(caller_module.__name__ if caller_module else "")
 
 
 def find_caller(caller_frame, stack_info=False):
@@ -73,7 +73,7 @@ def debug(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     logger.debug(msg, *args, **kwargs)
 
@@ -91,7 +91,7 @@ def info(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     logger.info(msg, *args, **kwargs)
 
@@ -109,7 +109,7 @@ def warning(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     logger.warning(msg, *args, **kwargs)
 
@@ -127,7 +127,7 @@ def error(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     logger.error(msg, *args, **kwargs)
 
@@ -145,7 +145,7 @@ def critical(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     logger.critical(msg, *args, **kwargs)
 
@@ -163,7 +163,7 @@ def exception(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     logger.exception(msg, *args, exc_info=msg, **kwargs)
 
@@ -181,7 +181,7 @@ async def async_debug(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     await asyncio.wrap_future(pool.submit(logger.debug, msg, *args, **kwargs))
 
@@ -199,7 +199,7 @@ async def async_info(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     await asyncio.wrap_future(pool.submit(logger.info, msg, *args, **kwargs))
 
@@ -217,7 +217,7 @@ async def async_warning(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     await asyncio.wrap_future(pool.submit(logger.warning, msg, *args, **kwargs))
 
@@ -235,7 +235,7 @@ async def async_error(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     await asyncio.wrap_future(pool.submit(logger.error, msg, *args, **kwargs))
 
@@ -253,7 +253,7 @@ async def async_critical(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     await asyncio.wrap_future(pool.submit(logger.critical, msg, *args, **kwargs))
 
@@ -271,6 +271,6 @@ async def async_exception(msg, *args, **kwargs):
         init_aelog()
     caller_frame = inspect.currentframe().f_back
     caller_module = inspect.getmodule(caller_frame)
-    logger = logging.getLogger(caller_module.__name__)
+    logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
     await asyncio.wrap_future(pool.submit(logger.exception, msg, *args, exc_info=msg, **kwargs))

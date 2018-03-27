@@ -1,6 +1,2 @@
-include requirements.txt
-include *.md
-include LICENSE
-
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

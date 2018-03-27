@@ -40,7 +40,7 @@ def test_aelog_output_console():
         aelog.exception(e)
 ```
 This will output to the terminal.  
-![console](docs/output_console.png)
+![console](https://raw.githubusercontent.com/tinybees/aelog/master/docs/output_console.png)
 - Different levels of logging, different color, the color is cyan, green, yellow, red and 'bold_red,bg_white' in turn.
 
 ### To initialize, output log to file and terminal.
@@ -68,7 +68,7 @@ def test_aelog_output_file():
         aelog.exception(e)
 ```
 This will output to the test.log file and terminal.
-![console](docs/output_file.png)
+![console](https://raw.githubusercontent.com/tinybees/aelog/master/docs/output_file.png)
 - Automatic output is greater than the error information to the 'test_error.log' file.
 - Different levels of logging, different color, the color is cyan, green, yellow, red and 'bold_red,bg_white' in turn.
 
@@ -95,6 +95,6 @@ if "__name__"=="__main__":
     loop.run_until_complete(test_async_output())
 ```
 This will output to the test.log file and terminal.
-![console](docs/async_output.png)
+![console](https://raw.githubusercontent.com/tinybees/aelog/master/docs/async_output.png)
 - Automatic output is greater than the error information to the 'test_error.log' file.  
 - Different levels of logging, different color, the color is cyan, green, yellow, red and 'bold_red,bg_white' in turn.

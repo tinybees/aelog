@@ -41,7 +41,7 @@ setup(name='aelog',
       requires=['colorlog'],
       install_requires=open("requirements.txt").readlines(),
       python_requires=">=3.5",
-      keywords="logging, colored, async, simple, rotating",
+      keywords="log, logging, colored, async, asynchronous, simple, rotating",
       license='MIT',
       classifiers=[
           'Development Status :: 4 - Beta',

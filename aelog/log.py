@@ -6,11 +6,9 @@
 @software: PyCharm
 @time: 18-3-24 下午10:24
 """
-import logging
-import logging.config
 import sys
 
-__all__ = ["init_aelog"]
+__all__ = ["aelog_config", "AELOG_CONFIG_DEFAULTS"]
 
 AELOG_CONFIG_DEFAULTS = {
     "version": 1,
@@ -49,15 +47,15 @@ AELOG_CONFIG_DEFAULTS = {
 }
 
 
-def aelog_config(access_file_name, *, console, max_bytes, backup_count):
+def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=None):
     """
     global logging config
     Args:
-        access_file_name: access log full filename
+        access_file: access log full file
         console: terminal output log
         max_bytes: log file max bytes
         backup_count: backup count
-
+        error_file: error log full file
     Returns:
 
     """
@@ -65,9 +63,12 @@ def aelog_config(access_file_name, *, console, max_bytes, backup_count):
         handlers = ["aelog_console", "aelog_access_file", "aelog_error_file"]
     else:
         handlers = ["aelog_access_file", "aelog_error_file"]
-
-    pre_file_name, expanded_name = access_file_name.split(".")
-    error_file_name = "{}.{}".format("{}_error".format(pre_file_name), expanded_name)
+    access_file = access_file if access_file.endswith(".log") else "{}.{}".format(access_file, "log")
+    if error_file is None:
+        pre_file_name, expanded_name = access_file.rsplit(".")
+        error_file = "{}.{}".format("{}_error".format(pre_file_name), expanded_name)
+    else:
+        error_file = error_file if error_file.endswith(".log") else "{}.{}".format(error_file, "log")
 
     aelog_config_defaults = {
         "version": 1,
@@ -100,7 +101,7 @@ def aelog_config(access_file_name, *, console, max_bytes, backup_count):
                 "class": "logging.handlers.RotatingFileHandler",
                 "level": "INFO",
                 "formatter": "aelog_default",
-                "filename": access_file_name,
+                "filename": access_file,
                 "maxBytes": max_bytes,
                 "backupCount": backup_count,
                 "encoding": "utf8"
@@ -109,7 +110,7 @@ def aelog_config(access_file_name, *, console, max_bytes, backup_count):
                 "class": "logging.handlers.RotatingFileHandler",
                 "level": "ERROR",
                 "formatter": "aelog_default",
-                "filename": error_file_name,
+                "filename": error_file,
                 "maxBytes": max_bytes,
                 "backupCount": backup_count,
                 "encoding": "utf8"
@@ -123,26 +124,3 @@ def aelog_config(access_file_name, *, console, max_bytes, backup_count):
         }
     }
     return aelog_config_defaults
-
-
-def init_aelog(access_file_name=None, console=False, max_bytes=50 * 1024 * 1024, backup_count=5):
-    """
-    init global logging
-
-    if access_file_name is none, then output log to the terminal.
-
-    Args:
-        access_file_name: access log full filename
-        console: terminal output log
-        max_bytes: log file max bytes
-        backup_count: backup count
-
-    Returns:
-
-    """
-    if access_file_name is None:
-        aelog_conf = AELOG_CONFIG_DEFAULTS
-    else:
-        aelog_conf = aelog_config(access_file_name, console=console, max_bytes=max_bytes, backup_count=backup_count)
-    logging.config.dictConfig(aelog_conf)
-    init_aelog.init_flag = True

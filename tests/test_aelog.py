@@ -18,7 +18,7 @@ def test_get_logger():
     Returns:
 
     """
-    aelog.init_aelog("test.log", True)
+    aelog.init_app(aelog_access_file="test.log", aelog_console=True)
     logger = aelog.get_logger()
     logger.debug("simple debug message")
     logger.info("simple info message")
@@ -58,7 +58,7 @@ def test_aelog_output_file():
     Returns:
 
     """
-    aelog.init_aelog("test.log", True)
+    aelog.init_app(aelog_access_file="test.log", aelog_console=True)
     aelog.debug("simple debug message")
     aelog.info("simple info message")
     aelog.warning("simple warning message")
@@ -71,7 +71,7 @@ def test_aelog_output_file():
 
 
 async def test_async_output():
-    aelog.init_aelog("test.log", True)
+    aelog.init_app(aelog_access_file="test.log", aelog_console=True)
     await aelog.async_debug("simple debug message")
     await aelog.async_info("simple info message")
     await aelog.async_warning("simple warning message")

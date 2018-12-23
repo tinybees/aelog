@@ -185,7 +185,7 @@ This will output to the test.log file and terminal.
 Changelog
 =========
 
-[1.0.2] - 2018-12-23
+[1.0.3] - 2018-12-23
 ^^^^^^^^^^^^^^^^^^^^
 
 Added

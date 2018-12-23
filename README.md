@@ -24,17 +24,18 @@ app = Flask(__name__)
 
 aelog.init_app(app)
 # or 
-aelog.init_app(aelog_access_file=aelog_access_file, aelog_error_file=aelog_error_file)
+aelog.init_app(aelog_access_file='aelog_access_file', aelog_error_file='aelog_error_file')
 ```
 # aelog config
 A list of configuration keys currently understood by the aelog:
+
 | 配置项 | 配置含义 |
 | ------ | ------ |
-| AELOG_ACCESS_FILE | Access file path, default None |
-| AELOG_ERROR_FILE | Error file path, default None |
-| AELOG_CONSOLE | Whether it is output at the terminal, default false |
-| AELOG_MAX_BYTES | Log file size, default 50M |
-| AELOG_BACKUP_COUNT | Rotating file count, default 5|
+| AELOG_ACCESS_FILE | Access file path, default None. |
+| AELOG_ERROR_FILE | Error file path, default None. |
+| AELOG_CONSOLE | Whether it is output at the terminal, default false. |
+| AELOG_MAX_BYTES | Log file size, default 50M. |
+| AELOG_BACKUP_COUNT | Rotating file count, default 5.|
 
 # Usage
 ### simple using, not initialized.

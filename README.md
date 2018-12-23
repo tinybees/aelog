@@ -16,6 +16,26 @@ aelog's design objectives:
 # Installing aelog
 - ```pip install aelog```
 
+# init aelog 
+```
+import aelog 
+
+app = Flask(__name__)
+
+aelog.init_app(app)
+# or 
+aelog.init_app(aelog_access_file=aelog_access_file, aelog_error_file=aelog_error_file)
+```
+# aelog config
+A list of configuration keys currently understood by the aelog:
+| 配置项 | 配置含义 |
+| ------ | ------ |
+| AELOG_ACCESS_FILE | Access file path, default None |
+| AELOG_ERROR_FILE | Error file path, default None |
+| AELOG_CONSOLE | Whether it is output at the terminal, default false |
+| AELOG_MAX_BYTES | Log file size, default 50M |
+| AELOG_BACKUP_COUNT | Rotating file count, default 5|
+
 # Usage
 ### simple using, not initialized.
 ```
@@ -46,8 +66,11 @@ This will output to the terminal.
 ### To initialize, output log to file and terminal.
 ```
 import aelog
+from flask import Flask
 
-aelog.init_aelog("test.log", True)  # Output to the test.log file and terminal 
+app = Flask(__name__)
+
+aelog.init_app(app)  # Output to the test.log file and terminal 
 
 def test_aelog_output_file():
     """
@@ -76,8 +99,11 @@ This will output to the test.log file and terminal.
 ```
 import asyncio
 import aelog
+from sanic import Sanic
 
-aelog.init_aelog("test.log", True)  # Output to the test.log file and terminal 
+app = Sanic(__name__)
+
+aelog.init_aelog(app)  # Output to the test.log file and terminal 
 
 async def test_async_output():
     await aelog.async_debug("simple debug message")

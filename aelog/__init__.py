@@ -7,7 +7,6 @@
 @time: 18-3-24 下午10:22
 """
 
-from .log import *
 from .aelog import *
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"

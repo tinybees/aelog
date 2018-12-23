@@ -31,6 +31,8 @@ aelog.init_app(aelog_access_file='aelog_access_file.log', aelog_error_file='aelo
 List of configuration keys that the aelog extension recognizes:
 
 
+| configuration key | the meaning of the configuration key |
+| ------ | ------ |
 | AELOG_ACCESS_FILE | Access file path, default None. |
 | AELOG_ERROR_FILE | Error file path, default None. |
 | AELOG_CONSOLE | Whether it is output at the terminal, default false. |

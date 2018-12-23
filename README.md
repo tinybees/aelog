@@ -24,10 +24,12 @@ app = Flask(__name__)
 
 aelog.init_app(app)
 # or 
-aelog.init_app(aelog_access_file='aelog_access_file.log', aelog_error_file='aelog_error_file.log', aelog_console=False)
+aelog.init_app(aelog_access_file='aelog_access_file.log', aelog_error_file='aelog_error_file.log', 
+               aelog_console=False)
 ```
 # aelog config
 List of configuration keys that the aelog extension recognizes:
+
 
 | AELOG_ACCESS_FILE | Access file path, default None. |
 | AELOG_ERROR_FILE | Error file path, default None. |

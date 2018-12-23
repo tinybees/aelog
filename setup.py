@@ -31,7 +31,7 @@ from aelog import __version__
 setup(name='aelog',
       version=__version__,
       description='An simple, async, full package name path, log rotating, different colored log library.',
-      long_description="{}{}".format(open('README.md').read(), open('CHANGES.md').read()),
+      long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
       author='TinyBees',
       author_email='a598824322@qq.com',

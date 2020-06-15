@@ -8,8 +8,8 @@
 """
 
 import asyncio
-from tests import test_aelog
 
+from tests import test_aelog
 
 if __name__ == '__main__':
     test_aelog.test_get_logger()

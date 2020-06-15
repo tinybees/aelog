@@ -40,9 +40,11 @@ List of configuration keys that the aelog extension recognizes:
 | AELOG_BACKUP_COUNT | Rotating file count, default 5.|
 
 # Usage
-### simple using, not initialized.
+### simple using, output log to terminal.
 ```
 import aelog
+
+aelog.init_app(aelog_console=True)
 
 def test_aelog_output_console():
     """
@@ -52,11 +54,11 @@ def test_aelog_output_console():
     Returns:
 
     """
-    aelog.debug("simple debug message")
-    aelog.info("simple info message")
-    aelog.warning("simple warning message")
-    aelog.error("simple error message")
-    aelog.critical("simple critical message")
+    aelog.debug("simple debug message", "other message")
+    aelog.info("simple info message", "other message")
+    aelog.warning("simple warning message", "other message")
+    aelog.error("simple error message", "other message")
+    aelog.critical("simple critical message", "other message")
     try:
         5 / 0
     except Exception as e:
@@ -66,7 +68,7 @@ This will output to the terminal.
 ![console](https://raw.githubusercontent.com/tinybees/aelog/master/docs/output_console.png)
 - Different levels of logging, different color, the color is cyan, green, yellow, red and 'bold_red,bg_white' in turn.
 
-### To initialize, output log to file and terminal.
+### output log to file and terminal.
 ```
 import aelog
 from flask import Flask
@@ -83,11 +85,11 @@ def test_aelog_output_file():
     Returns:
 
     """
-    aelog.debug("simple debug message")
-    aelog.info("simple info message")
-    aelog.warning("simple warning message")
-    aelog.error("simple error message")
-    aelog.critical("simple critical message")
+    aelog.debug("simple debug message", "other message")
+    aelog.info("simple info message", "other message")
+    aelog.warning("simple warning message", "other message")
+    aelog.error("simple error message", "other message")
+    aelog.critical("simple critical message", "other message")
     try:
         5 / 0
     except Exception as e:
@@ -98,7 +100,7 @@ This will output to the test.log file and terminal.
 - Automatic output is greater than the error information to the 'test_error.log' file.
 - Different levels of logging, different color, the color is cyan, green, yellow, red and 'bold_red,bg_white' in turn.
 
-### To initialize, asynchronous output log to file and terminal.
+### asynchronous output log to file and terminal.
 ```
 import asyncio
 import aelog
@@ -109,11 +111,11 @@ app = Sanic(__name__)
 aelog.init_aelog(app)  # Output to the test.log file and terminal 
 
 async def test_async_output():
-    await aelog.async_debug("simple debug message")
-    await aelog.async_info("simple info message")
-    await aelog.async_warning("simple warning message")
-    await aelog.async_error("simple error message")
-    await aelog.async_critical("simple critical message")
+    await aelog.async_debug("simple debug message", "other message")
+    await aelog.async_info("simple info message", "other message")
+    await aelog.async_warning("simple warning message", "other message")
+    await aelog.async_error("simple error message", "other message")
+    await aelog.async_critical("simple critical message", "other message")
     try:
         5 / 0
     except Exception as e:

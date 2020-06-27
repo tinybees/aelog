@@ -3,7 +3,7 @@
 """
 MIT License
 
-Copyright (c) 2018 Tiny Bees
+Copyright (c) 2018-2020 Tiny Bees
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ setup(name='aelog',
       entry_points={},
       requires=['colorlog'],
       install_requires=["colorlog>=3.1.0"],
-      python_requires=">=3.5",
+      python_requires=">=3.6",
       keywords="log, logging, colored, async, asynchronous, simple, rotating",
       license='MIT',
       classifiers=[

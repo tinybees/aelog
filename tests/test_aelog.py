@@ -40,11 +40,11 @@ def test_aelog_output_console():
 
     """
     aelog.init_app(aelog_console=True)
-    aelog.debug("simple debug message", "other message")
-    aelog.info("simple info message", "other message")
-    aelog.warning("simple warning message", "other message")
-    aelog.error("simple error message", "other message")
-    aelog.critical("simple critical message", "other message")
+    aelog.debug("simple debug message", "other message", 1, [1, 2, 3])
+    aelog.info("simple info message", "other message", 2, (1, 2, 3))
+    aelog.warning("simple warning message", "other message", 3, {1, 2, 3})
+    aelog.error("simple error message", "other message", 4, {1: 1, 2: 2, 3: 3})
+    aelog.critical("simple critical message", "other message", 5, classmethod)
     try:
         5 / 0
     except Exception as e:
@@ -60,11 +60,11 @@ def test_aelog_output_file():
 
     """
     aelog.init_app(aelog_access_file="test.log", aelog_console=True)
-    aelog.debug("simple debug message", "other message")
-    aelog.info("simple info message", "other message")
-    aelog.warning("simple warning message", "other message")
-    aelog.error("simple error message", "other message")
-    aelog.critical("simple critical message", "other message")
+    aelog.debug("simple debug message", "other message", 1, [6, 2, 3])
+    aelog.info("simple info message", "other message", 1, [6, 2, 3])
+    aelog.warning("simple warning message", "other message", 1, [6, 2, 3])
+    aelog.error("simple error message", "other message", 1, [1, 2, 3])
+    aelog.critical("simple critical message", "other message", 1, [1, 2, 3])
     try:
         5 / 0
     except Exception as e:
@@ -73,11 +73,11 @@ def test_aelog_output_file():
 
 async def test_async_output():
     aelog.init_app(aelog_access_file="test.log", aelog_console=True)
-    await aelog.async_debug("simple debug message", "other message")
-    await aelog.async_info("simple info message", "other message")
-    await aelog.async_warning("simple warning message", "other message")
-    await aelog.async_error("simple error message", "other message")
-    await aelog.async_critical("simple critical message", "other message")
+    await aelog.async_debug("simple debug message", "other message", 3, {1, 2})
+    await aelog.async_info("simple info message", "other message", 4, {3: 3})
+    await aelog.async_warning("simple warning message", "other message", 4, {3: 3})
+    await aelog.async_error("simple error message", "other message", 4, {3: 3})
+    await aelog.async_critical("simple critical message", "other message", 4, {3: 3})
     try:
         5 / 0
     except Exception as e:

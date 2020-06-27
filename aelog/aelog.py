@@ -113,7 +113,7 @@ def debug(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    logger.debug(f"{sep}".join((msg, *args)))
+    logger.debug(f"{sep}".join(str(val) for val in (msg, *args)))
 
 
 def info(msg, *args, sep=' '):
@@ -131,7 +131,7 @@ def info(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    logger.info(f"{sep}".join((msg, *args)))
+    logger.info(f"{sep}".join(str(val) for val in (msg, *args)))
 
 
 def warning(msg, *args, sep=' '):
@@ -149,7 +149,7 @@ def warning(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    logger.warning(f"{sep}".join((msg, *args)))
+    logger.warning(f"{sep}".join(str(val) for val in (msg, *args)))
 
 
 def error(msg, *args, sep=' '):
@@ -167,7 +167,7 @@ def error(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    logger.error(f"{sep}".join((msg, *args)))
+    logger.error(f"{sep}".join(str(val) for val in (msg, *args)))
 
 
 def critical(msg, *args, sep=' '):
@@ -185,7 +185,7 @@ def critical(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    logger.critical(f"{sep}".join((msg, *args)))
+    logger.critical(f"{sep}".join(str(val) for val in (msg, *args)))
 
 
 def exception(msg, *args, **kwargs):
@@ -221,7 +221,7 @@ async def async_debug(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    await asyncio.wrap_future(_pool.submit(logger.debug, f"{sep}".join((msg, *args))))
+    await asyncio.wrap_future(_pool.submit(logger.debug, f"{sep}".join(str(val) for val in (msg, *args))))
 
 
 async def async_info(msg, *args, sep=' '):
@@ -239,7 +239,7 @@ async def async_info(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    await asyncio.wrap_future(_pool.submit(logger.info, f"{sep}".join((msg, *args))))
+    await asyncio.wrap_future(_pool.submit(logger.info, f"{sep}".join(str(val) for val in (msg, *args))))
 
 
 async def async_warning(msg, *args, sep=' '):
@@ -257,7 +257,7 @@ async def async_warning(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    await asyncio.wrap_future(_pool.submit(logger.warning, f"{sep}".join((msg, *args))))
+    await asyncio.wrap_future(_pool.submit(logger.warning, f"{sep}".join(str(val) for val in (msg, *args))))
 
 
 async def async_error(msg, *args, sep=' '):
@@ -275,7 +275,7 @@ async def async_error(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    await asyncio.wrap_future(_pool.submit(logger.error, f"{sep}".join((msg, *args))))
+    await asyncio.wrap_future(_pool.submit(logger.error, f"{sep}".join(str(val) for val in (msg, *args))))
 
 
 async def async_critical(msg, *args, sep=' '):
@@ -293,7 +293,7 @@ async def async_critical(msg, *args, sep=' '):
     caller_module = inspect.getmodule(caller_frame)
     logger = logging.getLogger(caller_module.__name__ if caller_module else "")
     logger.findCaller = partial(find_caller, caller_frame)
-    await asyncio.wrap_future(_pool.submit(logger.critical, f"{sep}".join((msg, *args))))
+    await asyncio.wrap_future(_pool.submit(logger.critical, f"{sep}".join(str(val) for val in (msg, *args))))
 
 
 async def async_exception(msg, *args, **kwargs):

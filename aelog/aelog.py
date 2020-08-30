@@ -15,7 +15,8 @@ import traceback
 import warnings
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
-from logging import Logger
+# noinspection PyProtectedMember
+from logging import Logger, _nameToLevel
 from logging.config import dictConfig
 from typing import Tuple
 
@@ -45,6 +46,10 @@ def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, logleve
     Returns:
 
     """
+    level_name = list(_nameToLevel.keys())
+    if loglevel not in level_name:
+        raise ValueError(f"参数loglevel必须为{level_name}中的一个")
+
     if app is not None:
         aelog_access_file = app.config.get("AELOG_ACCESS_FILE", None) or aelog_access_file
         aelog_error_file = app.config.get("AELOG_ERROR_FILE", None) or aelog_error_file

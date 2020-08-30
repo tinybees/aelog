@@ -47,6 +47,7 @@ def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, logleve
 
     """
     level_name = list(_nameToLevel.keys())
+    loglevel = loglevel.upper()
     if loglevel not in level_name:
         raise ValueError(f"参数loglevel必须为{level_name}中的一个")
 

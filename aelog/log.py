@@ -8,46 +8,55 @@
 """
 import sys
 
-__all__ = ["aelog_config", "AELOG_CONFIG_DEFAULTS"]
+__all__ = ["aelog_config", "aelog_default_config"]
 
-AELOG_CONFIG_DEFAULTS = {
-    "version": 1,
-    "disable_existing_loggers": False,
 
-    "formatters": {
-        "aelog_default": {
-            "format": '%(asctime)s %(log_color)s [%(levelname)s] %(name)s [%(funcName)s %(lineno)d]: %(message)s',
-            "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
-            "class": "colorlog.ColoredFormatter",
-            "reset": True,
-            "log_colors": {
-                'DEBUG': 'cyan',
-                'INFO': 'green',
-                'WARNING': 'yellow',
-                'ERROR': 'red',
-                'CRITICAL': 'bold_red,bg_white',
+def aelog_default_config(loglevel="DEBUG"):
+    """
+    default logging config
+    Args:
+        loglevel: log level, default debug
+    Returns:
 
-            },
-        }
-    },
-    "handlers": {
-        "aelog_console": {
-            "class": "logging.StreamHandler",
-            "level": "DEBUG",
-            "formatter": "aelog_default",
-            "stream": sys.stdout,
-        }
-    },
-    "loggers": {
-        "": {
-            "level": "DEBUG",
-            "handlers": ["aelog_console"]
+    """
+    return {
+        "version": 1,
+        "disable_existing_loggers": False,
+
+        "formatters": {
+            "aelog_default": {
+                "format": '%(asctime)s %(log_color)s [%(levelname)s] %(name)s [%(funcName)s %(lineno)d]: %(message)s',
+                "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
+                "class": "colorlog.ColoredFormatter",
+                "reset": True,
+                "log_colors": {
+                    'DEBUG': 'cyan',
+                    'INFO': 'green',
+                    'WARNING': 'yellow',
+                    'ERROR': 'red',
+                    'CRITICAL': 'bold_red,bg_white',
+
+                },
+            }
+        },
+        "handlers": {
+            "aelog_console": {
+                "class": "logging.StreamHandler",
+                "level": "DEBUG",
+                "formatter": "aelog_default",
+                "stream": sys.stdout,
+            }
+        },
+        "loggers": {
+            "": {
+                "level": loglevel,
+                "handlers": ["aelog_console"]
+            }
         }
     }
-}
 
 
-def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=None):
+def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=None, loglevel="DEBUG"):
     """
     global logging config
     Args:
@@ -56,6 +65,7 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
         max_bytes: log file max bytes
         backup_count: backup count
         error_file: error log full file
+        loglevel: log level, default debug
     Returns:
 
     """
@@ -70,7 +80,7 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
     else:
         error_file = error_file if error_file.endswith(".log") else "{}.{}".format(error_file, "log")
 
-    aelog_config_defaults = {
+    log_config = {
         "version": 1,
         "disable_existing_loggers": False,
 
@@ -99,7 +109,7 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
             },
             "aelog_access_file": {
                 "class": "logging.handlers.RotatingFileHandler",
-                "level": "INFO",
+                "level": "DEBUG",
                 "formatter": "aelog_default",
                 "filename": access_file,
                 "maxBytes": max_bytes,
@@ -118,9 +128,9 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
         },
         "loggers": {
             "": {
-                "level": "DEBUG",
+                "level": loglevel,
                 "handlers": handlers
             }
         }
     }
-    return aelog_config_defaults
+    return log_config

@@ -27,8 +27,8 @@ __all__ = ("init_app", "get_logger", "debug", "info", "warning", "error", "criti
 _pool = ThreadPoolExecutor()
 
 
-def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, aelog_console=False,
-             aelog_max_bytes=50 * 1024 * 1024, aelog_backup_count=5):
+def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, loglevel="DEBUG",
+             aelog_console=False, aelog_max_bytes=50 * 1024 * 1024, aelog_backup_count=5):
     """
     init global logging
 
@@ -38,6 +38,7 @@ def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, aelog_c
         app: app 应用
         aelog_access_file: access log full file
         aelog_error_file: error log full file
+        loglevel: log level, default debug
         aelog_console: terminal output log
         aelog_max_bytes: log file max bytes
         aelog_backup_count: backup count
@@ -52,10 +53,10 @@ def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, aelog_c
         aelog_backup_count = app.config.get("AELOG_BACKUP_COUNT", None) or aelog_backup_count
 
     if aelog_access_file is None:
-        aelog_conf = AELOG_CONFIG_DEFAULTS
+        aelog_conf = aelog_default_config(loglevel=loglevel)
     else:
         aelog_conf = aelog_config(aelog_access_file, console=aelog_console, max_bytes=aelog_max_bytes,
-                                  backup_count=aelog_backup_count, error_file=aelog_error_file)
+                                  backup_count=aelog_backup_count, error_file=aelog_error_file, loglevel=loglevel)
     dictConfig(aelog_conf)
     init_app.init_flag = True
 

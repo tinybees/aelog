@@ -7,11 +7,28 @@
 @time: 18-3-24 下午10:24
 """
 import sys
+# noinspection PyProtectedMember
+from logging import _nameToLevel
 from typing import Dict
 
 from .consts import BACKUP_COUNT, MAX_BYTES
 
 __all__ = ["aelog_config", "aelog_default_config", "sanic_log_config"]
+
+
+def verify_loglevel(loglevel: str) -> str:
+    """
+    校验loglevel是否正确
+    Args:
+        loglevel: log level name
+    Returns:
+
+    """
+    level_name = list(_nameToLevel.keys())
+    loglevel = loglevel.upper()
+    if loglevel not in level_name:
+        raise ValueError(f"参数loglevel必须为{level_name}中的一个")
+    return loglevel
 
 
 def aelog_default_config(loglevel="DEBUG") -> Dict:
@@ -22,6 +39,7 @@ def aelog_default_config(loglevel="DEBUG") -> Dict:
     Returns:
 
     """
+    loglevel = verify_loglevel(loglevel)
     return {
         "version": 1,
         "disable_existing_loggers": False,
@@ -73,6 +91,7 @@ def aelog_config(access_file, *, error_file=None, console=True, loglevel="DEBUG"
     Returns:
 
     """
+    loglevel = verify_loglevel(loglevel)
     if console:
         handlers = ["aelog_console", "aelog_access_file", "aelog_error_file"]
     else:
@@ -153,6 +172,7 @@ def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DE
     Returns:
 
     """
+    loglevel = verify_loglevel(loglevel)
     if access_file.endswith(".log"):
         access_file = access_file
     else:
@@ -194,7 +214,6 @@ def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DE
             },
             "access_file": {
                 "class": "logging.handlers.RotatingFileHandler",
-                "level": "DEBUG",
                 "formatter": "access",
                 "filename": access_file,
                 "maxBytes": max_bytes,
@@ -227,7 +246,7 @@ def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DE
                 "qualname": "sanic.error",
             },
             "sanic.access": {
-                "level": loglevel,
+                "level": "INFO",
                 "handlers": ["access_file", "access_console"] if console else ["access_file"],
                 "qualname": "sanic.access",
             },

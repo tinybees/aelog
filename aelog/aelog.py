@@ -12,18 +12,16 @@ import inspect
 import logging
 import os
 import traceback
-import warnings
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
-from logging import Logger
 from logging.config import dictConfig
 from typing import Tuple
 
 from .consts import BACKUP_COUNT, MAX_BYTES
 from .log import aelog_config, aelog_default_config
 
-__all__ = ("init_app", "get_logger", "debug", "info", "warning", "error", "critical", "exception",
-           "async_debug", "async_info", "async_warning", "async_error", "async_exception", "async_critical")
+__all__ = ("init_app", "debug", "info", "warning", "error", "critical", "exception", "async_debug",
+           "async_info", "async_warning", "async_error", "async_exception", "async_critical")
 
 _pool = ThreadPoolExecutor()
 
@@ -60,23 +58,6 @@ def init_app(app=None, *, aelog_access_file: str = None, aelog_error_file: str =
         aelog_conf = aelog_config(aelog_access_file, error_file=aelog_error_file, console=aelog_console,
                                   loglevel=loglevel, max_bytes=aelog_max_bytes, backup_count=aelog_backup_count)
     dictConfig(aelog_conf)
-    setattr(init_app, "init_flag", True)
-
-
-def get_logger() -> Logger:
-    """
-    get logger object, If the aelog has no initialize, call init_aelog() and output to the terminal.
-    Args:
-
-    Returns:
-
-    """
-    warnings.warn("`get_logger` option is deprecated in version 1.0.5.  Use `aelog` instead.",
-                  DeprecationWarning)
-    if not getattr(init_app, "init_flag", None):
-        init_app()
-    caller_module = inspect.getmodule(inspect.currentframe().f_back)  # type: ignore
-    return logging.getLogger(caller_module.__name__ if caller_module else "")
 
 
 def find_caller(caller_frame, stack_info=False) -> Tuple:

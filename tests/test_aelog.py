@@ -10,27 +10,6 @@
 import aelog
 
 
-def test_get_logger():
-    """
-
-    Args:
-
-    Returns:
-
-    """
-    aelog.init_app(aelog_access_file="test.log", aelog_console=True)
-    logger = aelog.get_logger()
-    logger.debug("simple debug message")
-    logger.info("simple info message")
-    logger.warning("simple warning message")
-    logger.error("simple error message")
-    logger.critical("simple critical message")
-    try:
-        5 / 0
-    except Exception as e:
-        logger.exception(e)
-
-
 def test_aelog_output_console():
     """
 

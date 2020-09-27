@@ -12,7 +12,6 @@ import asyncio
 from tests import test_aelog
 
 if __name__ == '__main__':
-    test_aelog.test_get_logger()
     test_aelog.test_aelog_output_console()
     test_aelog.test_aelog_output_file()
     loop = asyncio.get_event_loop()

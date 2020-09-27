@@ -211,6 +211,7 @@ def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DE
             },
             "access_file": {
                 "class": "logging.handlers.RotatingFileHandler",
+                "level": "INFO",
                 "formatter": "access",
                 "filename": access_file,
                 "maxBytes": max_bytes,

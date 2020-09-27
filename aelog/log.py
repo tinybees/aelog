@@ -31,7 +31,7 @@ def verify_loglevel(loglevel: str) -> str:
     return loglevel
 
 
-def aelog_default_config(loglevel="DEBUG") -> Dict:
+def aelog_default_config(loglevel: str = "DEBUG") -> Dict:
     """
     default logging config
     Args:
@@ -76,8 +76,8 @@ def aelog_default_config(loglevel="DEBUG") -> Dict:
     }
 
 
-def aelog_config(access_file, *, error_file=None, console=True, loglevel="DEBUG",
-                 max_bytes=MAX_BYTES, backup_count=BACKUP_COUNT) -> Dict:
+def aelog_config(access_file: str, *, error_file: str = None, console: bool = True, loglevel: str = "DEBUG",
+                 max_bytes: int = MAX_BYTES, backup_count: int = BACKUP_COUNT) -> Dict:
     """
     global logging config
     Args:
@@ -155,8 +155,8 @@ def aelog_config(access_file, *, error_file=None, console=True, loglevel="DEBUG"
     return log_config
 
 
-def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DEBUG",
-                     max_bytes=MAX_BYTES, backup_count=BACKUP_COUNT) -> Dict:
+def sanic_log_config(access_file: str, *, error_file: str = None, console: bool = True, loglevel: str = "DEBUG",
+                     max_bytes: int = MAX_BYTES, backup_count: int = BACKUP_COUNT) -> Dict:
     """
     global logging config
     Args:

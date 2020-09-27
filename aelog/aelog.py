@@ -20,7 +20,7 @@ from logging.config import dictConfig
 from typing import Tuple
 
 from .consts import BACKUP_COUNT, MAX_BYTES
-from .log import *
+from .log import aelog_config, aelog_default_config
 
 __all__ = ("init_app", "get_logger", "debug", "info", "warning", "error", "critical", "exception",
            "async_debug", "async_info", "async_warning", "async_error", "async_exception", "async_critical")
@@ -28,9 +28,9 @@ __all__ = ("init_app", "get_logger", "debug", "info", "warning", "error", "criti
 _pool = ThreadPoolExecutor()
 
 
-def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None,
-             aelog_console=True, loglevel="DEBUG",
-             aelog_max_bytes=MAX_BYTES, aelog_backup_count=BACKUP_COUNT):
+def init_app(app=None, *, aelog_access_file: str = None, aelog_error_file: str = None,
+             aelog_console: bool = True, loglevel: str = "DEBUG",
+             aelog_max_bytes: int = MAX_BYTES, aelog_backup_count: int = BACKUP_COUNT):
     """
     init global logging
 
@@ -60,7 +60,7 @@ def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None,
         aelog_conf = aelog_config(aelog_access_file, error_file=aelog_error_file, console=aelog_console,
                                   loglevel=loglevel, max_bytes=aelog_max_bytes, backup_count=aelog_backup_count)
     dictConfig(aelog_conf)
-    init_app.init_flag = True
+    setattr(init_app, "init_flag", True)
 
 
 def get_logger() -> Logger:
@@ -75,7 +75,7 @@ def get_logger() -> Logger:
                   DeprecationWarning)
     if not getattr(init_app, "init_flag", None):
         init_app()
-    caller_module = inspect.getmodule(inspect.currentframe().f_back)
+    caller_module = inspect.getmodule(inspect.currentframe().f_back)  # type: ignore
     return logging.getLogger(caller_module.__name__ if caller_module else "")
 
 
@@ -91,7 +91,7 @@ def find_caller(caller_frame, stack_info=False) -> Tuple:
 
     sinfo = None
     if stack_info:
-        sio = os.io.StringIO()
+        sio = os.io.StringIO()  # type: ignore
         sio.write('Stack (most recent call last):\n')
         traceback.print_stack(caller_frame, file=sio)
         sinfo = sio.getvalue()

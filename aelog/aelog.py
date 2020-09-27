@@ -46,12 +46,12 @@ def init_app(app=None, *, aelog_access_file: str = None, aelog_error_file: str =
 
     """
     if app is not None:
-        aelog_access_file = app.config.get("AELOG_ACCESS_FILE", None) or aelog_access_file
-        aelog_error_file = app.config.get("AELOG_ERROR_FILE", None) or aelog_error_file
-        aelog_console = app.config.get("AELOG_CONSOLE", None) or aelog_console
-        aelog_level = app.config.get("AELOG_LEVEL", None) or aelog_level
-        aelog_max_bytes = app.config.get("AELOG_MAX_BYTES", None) or aelog_max_bytes
-        aelog_backup_count = app.config.get("AELOG_BACKUP_COUNT", None) or aelog_backup_count
+        aelog_access_file = app.config.get("AELOG_ACCESS_FILE") or aelog_access_file
+        aelog_error_file = app.config.get("AELOG_ERROR_FILE") or aelog_error_file
+        aelog_console = app.config.get("AELOG_CONSOLE", aelog_console)
+        aelog_level = app.config.get("AELOG_LEVEL") or aelog_level
+        aelog_max_bytes = app.config.get("AELOG_MAX_BYTES") or aelog_max_bytes
+        aelog_backup_count = app.config.get("AELOG_BACKUP_COUNT") or aelog_backup_count
 
     if aelog_access_file is None:
         aelog_conf = aelog_default_config(loglevel=aelog_level)

@@ -1,6 +1,6 @@
 ## Aelog Changelog
 
-###[1.0.6] - 2020-9-27
+###[1.0.7] - 2020-9-27
 
 #### Added
 - 新增sanic日志格式以支持sanic的access日志输出

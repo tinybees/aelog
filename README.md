@@ -36,6 +36,7 @@ List of configuration keys that the aelog extension recognizes:
 | AELOG_ACCESS_FILE | Access file path, default None. |
 | AELOG_ERROR_FILE | Error file path, default None. |
 | AELOG_CONSOLE | Whether it is output at the terminal, default false. |
+| AELOG_LEVEL | log level, default 'DEBUG'. |
 | AELOG_MAX_BYTES | Log file size, default 50M. |
 | AELOG_BACKUP_COUNT | Rotating file count, default 5.|
 

@@ -63,7 +63,6 @@ def aelog_default_config(loglevel="DEBUG") -> Dict:
         "handlers": {
             "aelog_console": {
                 "class": "logging.StreamHandler",
-                "level": "DEBUG",
                 "formatter": "aelog_default",
                 "stream": sys.stdout,
             }
@@ -125,13 +124,11 @@ def aelog_config(access_file, *, error_file=None, console=True, loglevel="DEBUG"
         "handlers": {
             "aelog_console": {
                 "class": "logging.StreamHandler",
-                "level": "DEBUG",
                 "formatter": "aelog_default",
                 "stream": sys.stdout,
             },
             "aelog_access_file": {
                 "class": "logging.handlers.RotatingFileHandler",
-                "level": "DEBUG",
                 "formatter": "aelog_default",
                 "filename": access_file,
                 "maxBytes": max_bytes,
@@ -222,7 +219,6 @@ def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DE
             },
             "error_console": {
                 "class": "logging.StreamHandler",
-                "level": "ERROR",
                 "formatter": "generic",
                 "stream": sys.stdout,
             },

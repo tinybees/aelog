@@ -20,6 +20,7 @@ from logging import Logger, _nameToLevel
 from logging.config import dictConfig
 from typing import Tuple
 
+from .consts import BACKUP_COUNT, MAX_BYTES
 from .log import *
 
 __all__ = ("init_app", "get_logger", "debug", "info", "warning", "error", "critical", "exception",
@@ -28,8 +29,9 @@ __all__ = ("init_app", "get_logger", "debug", "info", "warning", "error", "criti
 _pool = ThreadPoolExecutor()
 
 
-def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, loglevel="DEBUG",
-             aelog_console=False, aelog_max_bytes=50 * 1024 * 1024, aelog_backup_count=5):
+def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None,
+             aelog_console=True, loglevel="DEBUG",
+             aelog_max_bytes=MAX_BYTES, aelog_backup_count=BACKUP_COUNT):
     """
     init global logging
 
@@ -61,8 +63,8 @@ def init_app(app=None, *, aelog_access_file=None, aelog_error_file=None, logleve
     if aelog_access_file is None:
         aelog_conf = aelog_default_config(loglevel=loglevel)
     else:
-        aelog_conf = aelog_config(aelog_access_file, console=aelog_console, max_bytes=aelog_max_bytes,
-                                  backup_count=aelog_backup_count, error_file=aelog_error_file, loglevel=loglevel)
+        aelog_conf = aelog_config(aelog_access_file, error_file=aelog_error_file, console=aelog_console,
+                                  loglevel=loglevel, max_bytes=aelog_max_bytes, backup_count=aelog_backup_count)
     dictConfig(aelog_conf)
     init_app.init_flag = True
 

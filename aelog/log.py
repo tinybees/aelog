@@ -7,11 +7,14 @@
 @time: 18-3-24 下午10:24
 """
 import sys
+from typing import Dict
 
-__all__ = ["aelog_config", "aelog_default_config"]
+from .consts import BACKUP_COUNT, MAX_BYTES
+
+__all__ = ["aelog_config", "aelog_default_config", "sanic_log_config"]
 
 
-def aelog_default_config(loglevel="DEBUG"):
+def aelog_default_config(loglevel="DEBUG") -> Dict:
     """
     default logging config
     Args:
@@ -56,7 +59,8 @@ def aelog_default_config(loglevel="DEBUG"):
     }
 
 
-def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=None, loglevel="DEBUG"):
+def aelog_config(access_file, *, error_file=None, console=True, loglevel="DEBUG",
+                 max_bytes=MAX_BYTES, backup_count=BACKUP_COUNT) -> Dict:
     """
     global logging config
     Args:
@@ -96,9 +100,8 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
                     'WARNING': 'yellow',
                     'ERROR': 'red',
                     'CRITICAL': 'bold_red,bg_white',
-
                 },
-            }
+            },
         },
         "handlers": {
             "aelog_console": {
@@ -124,7 +127,7 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
                 "maxBytes": max_bytes,
                 "backupCount": backup_count,
                 "encoding": "utf8"
-            }
+            },
         },
         "loggers": {
             "": {
@@ -133,4 +136,102 @@ def aelog_config(access_file, *, console, max_bytes, backup_count, error_file=No
             }
         }
     }
+    return log_config
+
+
+def sanic_log_config(access_file, *, error_file=None, console=True, loglevel="DEBUG",
+                     max_bytes=MAX_BYTES, backup_count=BACKUP_COUNT) -> Dict:
+    """
+    global logging config
+    Args:
+        access_file: access log full file
+        console: terminal output log
+        max_bytes: log file max bytes
+        backup_count: backup count
+        error_file: error log full file
+        loglevel: log level, default debug
+    Returns:
+
+    """
+    if access_file.endswith(".log"):
+        access_file = access_file
+    else:
+        access_file = "{}.{}".format(access_file, "log")
+
+    if error_file is None:
+        pre_file_name, expanded_name = access_file.rsplit(".")
+        error_file = "{}.{}".format("{}_error".format(pre_file_name), expanded_name)
+    else:
+        error_file = error_file if error_file.endswith(".log") else "{}.{}".format(error_file, "log")
+
+    log_config = {
+        "version": 1,
+        "disable_existing_loggers": False,
+
+        "formatters": {
+            "generic": {
+                "format": "%(asctime)s [%(process)d] [%(levelname)s] %(message)s",
+                "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
+                "class": "logging.Formatter",
+            },
+            "access": {
+                "format": "%(asctime)s - (%(name)s)[%(levelname)s][%(host)s]: "
+                          + "%(request)s %(message)s %(status)d %(byte)d",
+                "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
+                "class": "logging.Formatter",
+            },
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "formatter": "generic",
+                "stream": sys.stdout,
+            },
+            "access_console": {
+                "class": "logging.StreamHandler",
+                "formatter": "access",
+                "stream": sys.stdout,
+            },
+            "access_file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "level": "DEBUG",
+                "formatter": "access",
+                "filename": access_file,
+                "maxBytes": max_bytes,
+                "backupCount": backup_count,
+                "encoding": "utf8"
+            },
+            "error_console": {
+                "class": "logging.StreamHandler",
+                "level": "ERROR",
+                "formatter": "generic",
+                "stream": sys.stdout,
+            },
+            "error_file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "level": "ERROR",
+                "formatter": "generic",
+                "filename": error_file,
+                "maxBytes": max_bytes,
+                "backupCount": backup_count,
+                "encoding": "utf8"
+            },
+        },
+        "loggers": {
+            "sanic.root": {
+                "level": loglevel,
+                "handlers": ["console"] if console else []},
+            "sanic.error": {
+                "level": loglevel,
+                "handlers": ["error_file", "error_console"] if console else ["error_file"],
+                "qualname": "sanic.error",
+            },
+            "sanic.access": {
+                "level": loglevel,
+                "handlers": ["access_file", "access_console"] if console else ["access_file"],
+                "qualname": "sanic.access",
+            },
+        }
+    }
+
     return log_config

@@ -15,7 +15,7 @@ import traceback
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from logging.config import dictConfig
-from typing import Tuple
+from typing import Dict, Tuple
 
 from .consts import BACKUP_COUNT, MAX_BYTES
 from .log import aelog_config, aelog_default_config
@@ -46,12 +46,13 @@ def init_app(app=None, *, aelog_access_file: str = None, aelog_error_file: str =
 
     """
     if app is not None:
-        aelog_access_file = app.config.get("AELOG_ACCESS_FILE") or aelog_access_file
-        aelog_error_file = app.config.get("AELOG_ERROR_FILE") or aelog_error_file
-        aelog_console = app.config.get("AELOG_CONSOLE", aelog_console)
-        aelog_level = app.config.get("AELOG_LEVEL") or aelog_level
-        aelog_max_bytes = app.config.get("AELOG_MAX_BYTES") or aelog_max_bytes
-        aelog_backup_count = app.config.get("AELOG_BACKUP_COUNT") or aelog_backup_count
+        config: Dict = app.config if getattr(app, "config", None) else app.state.config
+        aelog_access_file = config.get("AELOG_ACCESS_FILE") or aelog_access_file
+        aelog_error_file = config.get("AELOG_ERROR_FILE") or aelog_error_file
+        aelog_console = config.get("AELOG_CONSOLE", aelog_console)
+        aelog_level = config.get("AELOG_LEVEL") or aelog_level
+        aelog_max_bytes = config.get("AELOG_MAX_BYTES") or aelog_max_bytes
+        aelog_backup_count = config.get("AELOG_BACKUP_COUNT") or aelog_backup_count
 
     if aelog_access_file is None:
         aelog_conf = aelog_default_config(loglevel=aelog_level)
